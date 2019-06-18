@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 /*
+  OSA1
   STEP 5 Done (1.5)
 */
 const Header = (props) => {

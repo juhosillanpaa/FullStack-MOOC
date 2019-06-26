@@ -4,19 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .",
     "watch": "nodemon index.js",
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rmdir /s build && cd ../../osa2/puhelinluettelo && npm run build --prod",
+    "fetch:ui": "@powershell cp -r ../../osa2/puhelinluettelo/build",
+    "build:full": "npm run build:ui && npm run fetch:ui",
+    "deploy:full": "npm run build:full && git add . && git commit -m uibuild && git push heroku master"
   },
   "author": "juho sillanpää",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "mongoose": "^5.6.0",
+    "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.9.1",
     "save": "^2.4.0"
   },
   "devDependencies": {
+    "eslint": "^6.0.1",
     "nodemon": "^1.19.1"
   }
 }

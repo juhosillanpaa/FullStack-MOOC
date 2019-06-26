@@ -127,6 +127,7 @@ const App = () => {
                             hook()
                         })  
                         .catch(error =>{
+                            console.log(error)
                             showError(`Person ${person.name} was already deleted from server`)
                             hook()
                         })  
@@ -143,14 +144,20 @@ const App = () => {
             number: newNumber
         }
         if (!persons.filter(person => person.name.toLowerCase() === newName.toLowerCase()).length >0){
-            setPersons(persons.concat(noteObject))
-            personService
-                .create(noteObject)
-                .then(response => {
-                    showMessage(`Person ${newName} was added succesfully`)
-                    setPersons(persons.concat(response))
-                })
-        
+            if (noteObject.number) {
+                personService
+                    .create(noteObject)
+                    .then(response => {
+                        showMessage(`Person ${newName} was added succesfully`)
+                        setPersons(persons.concat(response))
+                    })
+                    .catch(error =>{
+                        showError(`${error.response.data.error}`)
+                        console.log(error.response.data.error)
+                    })
+            } else {
+                alert("Number is missing")
+            }
         }
         else{
             if (window.confirm(`${newName} is already added to phonebook. Do you want to update the number?`)){
@@ -161,6 +168,7 @@ const App = () => {
                         showMessage(`Number of ${temp.name} was updated succesfully`)
                         hook()
                     })
+                    .catch(error => console.log(error))
             }
         }
         setNewName('')

@@ -13,7 +13,7 @@ import BlogList from './components/BlogList'
 import { initializeBlogs } from './reducers/blogReducer'
 import {
     BrowserRouter as Router,
-    Route, Link, Redirect, withRouter
+    Route
 } from 'react-router-dom'
 import Menu from './components/Menu'
 
@@ -26,7 +26,7 @@ const App = (props) => {
         // eslint-disable-next-line
     },[])
 
-   
+
     const blogById = ( id ) => {
         console.log(`wanted id is ${id}`)
 
@@ -39,11 +39,17 @@ const App = (props) => {
     return (
         <div>
             <Router>
-                <div>
-                    <h1>Notes</h1>
+                <div className = "container">
+                    <div className = "textContainer">
+                        <h1>Notes</h1>
+                    </div>
+
                     <Notification />
 
-                    <h2>Login</h2>
+                    <div className = "textContainer">
+                        <h2>Login</h2>
+                    </div>
+
                     {props.loggedUser === '' ?
                         <LoginForm /> :
                         <div>
@@ -67,7 +73,7 @@ const App = (props) => {
                             <Route exact path = '/blogs/:id' render = {({ match }) =>
                                 <SingleBlog blog = {blogById(match.params.id)} />
                             } />
-                            <Route path = '/blogs' render = {() =>
+                            <Route exact path = '/blogs' render = {() =>
                                 <BlogList />
                             } />
 

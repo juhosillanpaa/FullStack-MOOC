@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 
 blogsRouter.get('/', async (request, response) => {
     const blogs = await Blog.find({}).populate('user',{ username: 1, name: 1, id: 1 })
+    console.log(blogs)
     response.json(blogs.map(blog => blog.toJSON()))
 })
 
@@ -42,19 +43,24 @@ blogsRouter.post('/', async (request, response, next) => {
 
 blogsRouter.post('/:id/comments', async (request, response, next) => {
     const body = request.body
+    console.log(body)
     try{
+        /*
         const comment = {
-            text: body.text
+            comment: body.text
         }
-        const blog = await Blog.findById(request.params.id)
         
         console.log(`We think you commented this ${blog}`)
-
+        console.log(`comment: ${comment}`)
         const savedComment = await comment.save()
-        blog.comments = blog.comments.concat(savedComment.id)
+        console.log(`savedcomment: ${savedComment}`)
+        */
+        const blog = await Blog.findById(request.params.id)
+        blog.comments = blog.comments.concat(body.text)
         await blog.save()
-        response.json(savedComment.toJSON())
+        response.json(body.text)
     } catch (exception) {
+        console.log('something went wrong')
         next(exception)
     }
 })

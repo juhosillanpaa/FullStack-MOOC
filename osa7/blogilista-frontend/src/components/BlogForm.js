@@ -15,10 +15,10 @@ const BlogForm = (props) => {
         e.target.author.value = ''
         e.target.title.value = ''
         props.createBlog(newObj)
-        props.showNotification('New anecdote added!', 5)
+        props.showNotification('New blog added!', 5)
     }
     return (
-        <div>
+        <div className = "form">
             <h3>Create new Blog</h3>
             <form onSubmit = {addBlog}>
                 title: <input name = 'title'/>

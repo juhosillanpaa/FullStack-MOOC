@@ -16,6 +16,9 @@ const blogReducer = (state = [], action) => {
     case 'DEFAULT_COMMENT':
         return state.map(b =>
             b.id !== action.data.id ? b : action.data)
+    case 'CUSTOM_COMMENT':
+        return state.map(b =>
+            b.id !== action.data.id ? b : action.data)
     default:
         return state
     }
@@ -35,16 +38,19 @@ export const likeBlog = (blog) => {
     }
 }
 
-export const defaultComment = ({ blog }) => {
-    const newComment = {
-        text: 'I havent read this yet'
-    }
+export const defaultComment = ( blog ) => {
+    console.log('in reducer:')
+    console.log(blog.title)
+    const newComment = 'I havent read this yet'
+
     const updatedComments = blog.comments.concat(newComment)
+
     const newObj = {
         ...blog,
         comments: updatedComments
     }
-    
+    console.log('newobj',newObj)
+
     return async dispatch => {
         await blogService.comment(blog.id, newComment)
         dispatch({
@@ -52,7 +58,17 @@ export const defaultComment = ({ blog }) => {
             data: newObj
         })
     }
+}
 
+export const customComment = (blog) => {
+    const comment = blog.comments[blog.comments.length -1]
+    return async dispatch => {
+        await blogService.comment(blog.id, comment)
+        dispatch({
+            type: 'CUSTOM_COMMENT',
+            data: blog
+        })
+    }
 }
 
 export const initializeBlogs = () => {

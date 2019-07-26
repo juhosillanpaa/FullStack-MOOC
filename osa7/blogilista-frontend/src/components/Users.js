@@ -33,13 +33,16 @@ const Users = (props) => {
         }
     })
     return (
-        <div>
-            <h3>Users</h3>
+        <div className = "users">
+            <div className = "textContainer">
+                <h3>Users</h3>
+            </div>
+
             <table>
                 <tbody>
                     <tr>
                         <td></td>
-                        <td><strong>blogs creater</strong></td>
+                        <td><strong>blogs created</strong></td>
                     </tr>
                     {users.map((user,index) =>
                         <User

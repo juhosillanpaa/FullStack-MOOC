@@ -56,8 +56,13 @@ const Blog = ({ blog, handleLikeClick, loggedUser }) => {
 
     return (
         <div style = {blogStyle} onClick = {() => toggleVisibility(blog.id)}  id = {blog.id} className = 'blog'>
-            <Link to = {`/blogs/${blog.id}`}>{blog.title}</Link>
-            {blog.author}
+            <div className = "textContainer">
+                <Link className = "blogItem" to = {`/blogs/${blog.id}`}>{blog.title}</Link>
+                <div className = "blogItem">
+                    {blog.author}
+                </div>
+            </div>
+
             <div className = "notDisplayed" id = {`${blog.id}child`} >
                 <p>{blog.url}</p>
                 <p>{blog.likes} <button onClick = {(e) => handleLikeButtonPress( e , handleLikeClick )}>like</button></p>

@@ -6,7 +6,7 @@ import { showNotification } from '../reducers/notificationReducer'
 
 const BlogList = (props) => {
     return (
-        <div>
+        <div className = "blogs">
             {props.blogs.map(blog =>
                 <Blog
                     key = {blog.id}

@@ -91,7 +91,7 @@ test('Dummy return one', () => {
 })
 
 describe('total likes', () => {
-    
+
     test('array of an empty list returns 0', () => {
         const result = listHelper.totalLikes([])
         expect(result).toBe(0)

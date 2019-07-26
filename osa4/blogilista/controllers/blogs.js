@@ -26,7 +26,8 @@ blogsRouter.post('/', async (request, response, next) => {
             author: body.author,
             url: body.url,
             likes: body.likes,
-            user: user._id  //check is this should be id or _id
+            user: user._id,  //check is this should be id or _id
+            comments: []
         })
 
         const savedBlog = await blog.save()
@@ -39,6 +40,25 @@ blogsRouter.post('/', async (request, response, next) => {
     }
 })
 
+blogsRouter.post('/:id/comments', async (request, response, next) => {
+    const body = request.body
+    try{
+        const comment = {
+            text: body.text
+        }
+        const blog = await Blog.findById(request.params.id)
+        
+        console.log(`We think you commented this ${blog}`)
+
+        const savedComment = await comment.save()
+        blog.comments = blog.comments.concat(savedComment.id)
+        await blog.save()
+        response.json(savedComment.toJSON())
+    } catch (exception) {
+        next(exception)
+    }
+})
+
 
 blogsRouter.put('/:id', async (request, response, next) => {
     const body = request.body
@@ -46,7 +66,8 @@ blogsRouter.put('/:id', async (request, response, next) => {
         title: body.title,
         author: body.author,
         url: body.url,
-        likes: body.likes
+        likes: body.likes,
+        comments: body.comments
     }
     try {
         const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, note, { new: true })
